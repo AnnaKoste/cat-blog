@@ -25,8 +25,7 @@ class Recommended extends React.Component{
         {this.state.posts.map(item => (
            <div className="recommended-block" key={item.id}>
              <NavLink className="post-link" to={`/post/${item.id}`}>
-               <h3 className="recommended-text">{item.title.rendered}</h3>
-               <div className="recommended-text" dangerouslySetInnerHTML={{ __html: item.excerpt.rendered}}></div>
+               <p className="recommended-text">{item.title.rendered}</p>
              </NavLink>
           </div>
       ))}

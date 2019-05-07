@@ -5,7 +5,7 @@ import './index.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route, NavLink, Link } from 'react-router-dom';
 import About from './about.js'
-import Footer from './footer.js'
+import Contacts from './contacts.js'
 import Tags from './tags.js'
 import Recommended from './recommended.js'
 import logo from './img/logo.png'
@@ -34,7 +34,7 @@ class PostsList extends React.Component{
   }
   render() {
     return (
-      <div className="left-blocks">
+      <div>
         {this.state.posts.map(item => (
            <div key={item.id}>
              <NavLink className="post-link" to={`/post/${item.id}`}>
@@ -88,41 +88,95 @@ class Post extends React.Component {
     }
 }
 
+class TagsMenu extends React.Component{
+  constructor(props) {
+    super(props)
+    this.state = {
+      tags: []
+    };
+  }
+  componentWillMount () {
+    return fetch(BLOG_API + '/wp-json/wp/v2/tags').then((response) => response.json())
+    .then(tags => {
+      this.setState({
+        tags: tags,
+      });
+    })
+  }
+  render() {
+    return <div>
+        <ul className="menu-tags">
+        {this.state.tags.map(item => (
+          <li key={item.id}><NavLink to="/" className="menu-tags">{item.name}</NavLink></li>
+        ))}
+        </ul>
+    </div>
+  }
+}
+
 const Main = () => (
   <main>
-    <div className="left">
+    <div className="">
     <Switch>
       <Route exact path="/" component={PostsList} />
       <Route path="/post/:id" component={Post} />
-      <Route path="/tags" component={Tags} />
+      <Route path="/tags/:name" component={Tags} />
       <Route path="/about" component={About} />
+      <Route path="/contacts" component={Contacts} />
     </Switch>
-    </div>
-    <div className="right">
-      <Recommended />
     </div>
   </main>
 )
 
-const Header = () => (
-  <header>
-    <nav className="top-menu">
-      <Link to={'/'} className="logo"><img className="logo-img" src={logo} alt={"logo"}/></Link>
-      <h1 className="header-text">Cat's Blog</h1>
-      <ul className="menu">
-        <li><NavLink to='/'>Posts</NavLink></li>
-        <li><NavLink to='/tags'>Tags</NavLink></li>
-        <li><NavLink to='/about'>About Blog</NavLink></li>
-      </ul>
-    </nav>
-  </header>
-)
+class Header extends React.Component{
+  constructor() {
+		super();
+		this.state = {
+			shown: true,
+		};
+	}
+
+	toggle() {
+		this.setState({
+			shown: !this.state.shown
+		});
+	}
+  render() {
+    if (document.body.clientWidth < 600) {
+  		var shown = {
+  			display: this.state.shown ? "block" : "none"
+  		};
+
+  		var hidden = {
+  			display: this.state.shown ? "none" : "block"
+  		}
+    }
+
+    return (
+      <header >
+        <label className="showmenu" onClick={this.toggle.bind(this)} style={ hidden }>&#9776;</label>
+        <nav className="top-menu" style={ shown } onClick={this.toggle.bind(this)} >
+          <h1 className="header-text">Cat's Blog</h1>
+          <Link to={'/'} className="logo"><img className="logo-img" src={logo} alt={"logo"}/></Link>
+          <ul className="menu">
+            <li className="menu-item"><NavLink to='/' className="menu-link">Posts</NavLink></li>
+            <li className="menu-item"><NavLink to='/about' className="menu-link">About Blog</NavLink></li>
+            <li className="menu-item"><NavLink to='/contacts' className="menu-link">Contacts</NavLink></li>
+            <li className="menu-item menu-link"><Recommended /></li>
+            <li className="menu-item menu-link menu-tag">Tags:
+              <TagsMenu />
+            </li>
+          </ul>
+        </nav>
+      </header>
+    )
+  }
+}
 
 const App = () => (
   <div className="page">
     <Header />
     <Main />
-    <Footer />
   </div>
 )
 
