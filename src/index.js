@@ -107,7 +107,7 @@ class TagsMenu extends React.Component{
     return <div>
         <ul className="menu-tags">
         {this.state.tags.map(item => (
-          <li key={item.id}><NavLink to="/" className="menu-tags">{item.name}</NavLink></li>
+          <li key={item.id}><NavLink to={`/tags/${item.id}`} className="menu-tags">{item.name}</NavLink></li>
         ))}
         </ul>
     </div>
@@ -120,9 +120,10 @@ const Main = () => (
     <Switch>
       <Route exact path="/" component={PostsList} />
       <Route path="/post/:id" component={Post} />
-      <Route path="/tags/:name" component={Tags} />
+      <Route path="/tags/:id" component={Tags} />
       <Route path="/about" component={About} />
       <Route path="/contacts" component={Contacts} />
+      <Route path="/recommended/:id" component={Post} />
     </Switch>
     </div>
   </main>
