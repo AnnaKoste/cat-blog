@@ -64,13 +64,22 @@ class Post extends React.Component {
       post: null
     };
   }
-  componentWillMount () {
-    return fetch(BLOG_API + '/wp-json/wp/v2/posts/' + this.props.match.params.id+'?_embed').then((response) => response.json())
+  fetchData(postId) {
+    fetch(BLOG_API + '/wp-json/wp/v2/posts/' + postId+'?_embed')
+    .then((response) => response.json())
     .then(post => {
       this.setState({
-        post: post,
+        post: post
       });
     })
+  }
+  componentWillMount () {
+    let postId = this.props.match.params.id;
+    this.fetchData(postId)
+  }
+  componentWillReceiveProps(nextProps) {
+    let postId = nextProps.match.params.id;
+    this.fetchData(postId)
   }
   render() {
     if (!this.state.post) return <div>Downloads...</div>
@@ -123,7 +132,6 @@ const Main = () => (
       <Route path="/tags/:id" component={Tags} />
       <Route path="/about" component={About} />
       <Route path="/contacts" component={Contacts} />
-      <Route path="/recommended/:id" component={Post} />
     </Switch>
     </div>
   </main>

@@ -14,14 +14,22 @@ class Tags extends React.Component{
       posts: []
     };
   }
-  componentWillMount () {
-    return fetch(BLOG_API + '/wp-json/wp/v2/posts?_embed&tags=' + this.props.match.params.id)
+  fetchData(postsTag) {
+    fetch(BLOG_API + '/wp-json/wp/v2/posts?_embed&tags=' + postsTag)
     .then((response) => response.json())
     .then(posts => {
       this.setState({
         posts: posts,
       });
     })
+  }
+  componentWillMount () {
+    let postsTag = this.props.match.params.id;
+    this.fetchData(postsTag)
+  }
+  componentWillReceiveProps(nextProps) {
+    let postsTag = nextProps.match.params.id;
+    this.fetchData(postsTag)
   }
   render() {
     return (
