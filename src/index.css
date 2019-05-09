@@ -61,7 +61,7 @@ ul.menu {
   text-align: center;
   border-top-width: 1px;
   border-top-style: solid;
-  border-top-color: #b6b0b0;
+  border-top-color: #66976b;
 }
 
 .menu-tags {
@@ -120,7 +120,7 @@ h3, p {
 }
 
 .post-small {
-  color: #858585;
+  color: #c8868d;
   font-size: 1em;
   margin: 0;
   padding: 0;
@@ -142,13 +142,13 @@ h3, p {
 }
 
 .main-post-small {
-  color: #858585;
+  color: #c8868d;
   font-size: 1em;
   margin-bottom: 0.5em;
 }
 
 .main-post-back {
-  color: #858585;
+  color: #c8868d;
 }
 
 .main-post-text {
@@ -195,7 +195,7 @@ img {
   text-align: center;
   border-top-width: 1px;
   border-top-style: solid;
-  border-top-color: #b6b0b0;
+  border-top-color: #66976b;
 }
 
 .recommended-text {
