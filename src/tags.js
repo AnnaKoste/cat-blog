@@ -2,10 +2,7 @@ import React from "react"
 import { NavLink } from 'react-router-dom';
 const BLOG_API = 'https://f.3337.tk/';
 
-function getDate(date) {
-  date = date.slice(0, -9);
-  return date;
-}
+const GetDate = (date) => date = date.slice(0, -9);
 
 class Tags extends React.Component{
   constructor(props) {
@@ -43,7 +40,7 @@ class Tags extends React.Component{
                </div>
                <div className="post-data">
                  <h3 className="post-title">{item.title.rendered}</h3>
-                 <p className="post-small">{getDate(item.date)}</p>
+                 <p className="post-small">{GetDate(item.date)}</p>
                  <div className="post-description" dangerouslySetInnerHTML={{ __html: item.excerpt.rendered}}></div>
                  <p className="post-small">(Read more)</p>
                </div>
