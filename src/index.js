@@ -58,7 +58,7 @@ class PostsList extends React.Component{
 
 const Main = () => (
   <main>
-    <div className="">
+    <div className="main">
     <Switch>
       <Route exact path="/" component={PostsList} />
       <Route path="/post/:id" component={Post} />
